@@ -1,0 +1,54 @@
+Based on Adventure Work Database
+
+1) Variances Measure for Costumized Data Label
+
+Up and Down Color = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "green",
+    _Item < 0,  "red"
+)
+RETURN
+_Label
+
+__________________________-
+2) Variances Measure for Costumized Data Label Color
+
+Up and Down Color light = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "#green",
+    _Item < 0,  "#red"
+)
+RETURN
+_Label
+__________________________
+3) Error Bar Upper Bound
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+_________________________
+4) Error Bar Lower Bound
+Zero=0
+
+_________________________
+5) Color for Bars
+Up and Down Color light = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "#D0F0C0A6",
+    _Item < 0,  "#ffcbd1A6"
+)
+RETURN
+_Label
+_____________________
+
+

@@ -1,3 +1,5 @@
+Based on Adventure Work Database
+
 Growth %
 % Growth = DIVIDE([Revenue]-[PY],[PY])
 

@@ -1,0 +1,13 @@
+Based on Adventure Work Database
+
+Growth %
+% Growth = DIVIDE([Revenue]-[PY],[PY])
+
+Revenue
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+PY 
+PY = CALCULATE([Revenue],SAMEPERIODLASTYEAR(DimDate[Date]))
+
+Matrix width
+Matrix width = REPT( "0", 20)

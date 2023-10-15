@@ -1,0 +1,42 @@
+Based on Adventure Work Database
+
+Revenue
+Revenue Europe =
+CALCULATE (
+    SUM ( FactInternetSales[SalesAmount] ),
+    FILTER ( DimSalesTerritory, DimSalesTerritory[SalesTerritoryGroup] = "Europe" )
+)
+
+For Pacific and North America change the Filter from "Europe" to "Pacific" and "North America", call the Meaures:
+Revenue North America
+Revenue Pacific
+
+
+PY 
+PY North America =
+CALCULATE ( [Revenue North Europe], SAMEPERIODLASTYEAR ( DimDate[Date] ) )
+
+For Pacific and North America change the Measure from "Revenue Europe" to "Revenue Pacific" and "Revenue North America" call the Measures:
+PY Pacific
+PY North America
+
+
+Lavel Revenue
+Label Revenue Europe = 
+  "△% LM: " &
+FORMAT(
+    DIVIDE(
+    [Revenue Europe],
+    [PY Europe]     
+     )-1,
+    "#,##0%"
+)
+
+For Pacific and North America switch the [Revenue Europe][PY Europe] with North America and Pacific Measures call the Measures:
+Label Revenue Pacific
+Label Revenue North America
+
+Color for Variance Label in Title
+Color Europe = If([Revenue Europe]>[PY Europe],"green","red")
+Color North America = If([Revenue North America]>[PY North America],"green","red")
+Color Pacific = If([Revenue Pacific]>[PY Pacific],"green","red")

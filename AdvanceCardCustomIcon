@@ -1,0 +1,55 @@
+Based on Adventure Work Database
+
+Growth %
+% Growth = DIVIDE([Revenue]-[PY],[PY])
+
+Revenue
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+Revenue Label
+Revenue Label = FORMAT([Revenue],"€#,0,.0#K")
+
+PY 
+PY = CALCULATE([Revenue],SAMEPERIODLASTYEAR(DimDate[Date]))
+
+
+Up and Down Color
+Up and Down Color = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "green",
+    _Item < 0,  "red"
+)
+RETURN
+_Label
+
+Up and Down Color light 
+Up and Down Color light = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "#D0F0C0A6",
+    _Item < 0,  "#ffcbd1A6"
+)
+RETURN
+_Label
+
+Revenue Trend 
+Revenue Trend = 
+If ([Revenue]>[PY],
+[Image Up],
+[Image Down])
+
+Image Down = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Arrow_down_red.svg/783px-Arrow_down_red.svg.png"
+Image Up = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Green-Up-Arrow.svg/2153px-Green-Up-Arrow.svg.png"
+
+
+
+
+
+

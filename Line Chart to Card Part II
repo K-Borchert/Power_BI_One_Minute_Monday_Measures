@@ -1,0 +1,20 @@
+Based on Adventure Work Database
+
+Revenue
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+PY 
+PY = CALCULATE([Revenue],SAMEPERIODLASTYEAR(DimDate[Date]))
+
+
+Under Target
+Under target revenue = if([Revenue]<[PY], [Revenue])
+
+
+Above Target
+Above target revenue = if( [Revenue]>[PY], [Revenue])
+
+
+Zero
+Zero = 0
+

@@ -1,0 +1,67 @@
+Based on Adventure Work Database
+
+Growth %
+% Growth = DIVIDE([Revenue]-[PY],[PY])
+
+
+Revenue
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+
+Revenue Label
+Revenue Label = FORMAT([Revenue],"€#,0,.0#K")
+
+
+PY 
+PY = CALCULATE([Revenue],SAMEPERIODLASTYEAR(DimDate[Date]))
+
+
+Revenue (Δ 'PY - 'CY)
+Revenue (Δ 'PY - 'CY) = 
+VAR _CY = [Revenue]
+VAR _PY = [PY]
+VAR _Delta = _CY - _PY
+RETURN
+_Delta
+
+
+Subtitle - Reporting Year Rev
+Subtitle - Reporting Year Rev = 
+VAR Growth = [% Growth]
+VAR PYRevenue = [Revenue (Δ 'PY - 'CY)]
+
+VAR MoMLine = 
+IF(Growth >0 , 
+"Growth% ▲ at " & CONVERT(FORMAT([% Growth],
+"+#.0%;-#.0%"), STRING),
+"Growth ▼ at " & CONVERT(FORMAT([% Growth], 
+"+#.0%;-#.0%"), STRING))
+
+VAR RevLine = 
+IF( PYRevenue> 0, 
+"PY: " & CONVERT(FORMAT([Revenue (Δ 'PY - 'CY)], "$#,0,.0#K"),STRING) & 
+" above target rev", 
+"PY: " & CONVERT(FORMAT([Revenue (Δ 'PY - 'CY)], "$#,0,.0#K"),STRING) & 
+" below target rev")
+
+Return
+MoMLine & UNICHAR(10) & RevLine
+
+
+Up and Down Color
+Up and Down Color = 
+VAR _Item = [% Growth]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "green",
+    _Item < 0,  "red"
+)
+RETURN
+_Label
+
+
+Revenue Highest Line 17% 
+Revenue Highest Line 17% = [Revenue]*0.17
+

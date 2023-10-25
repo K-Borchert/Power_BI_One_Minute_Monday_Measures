@@ -1,0 +1,44 @@
+Based on Adventure Work Database
+
+
+Revenue
+Revenue = SUM(FactInternetSales[SalesAmount])
+
+
+PY 
+PY = CALCULATE([Revenue],SAMEPERIODLASTYEAR(DimDate[Date]))
+
+
+Revenue - PY
+Revenue - PY = [Revenue]-[PY]
+
+
+Y1 Max Line
+Y1 Max Line = 
+Maxx(
+    ALLSELECTED(DimDate[MonthNumberOfYear]),
+    [Revenue]
+    )*3
+
+
+Y2 Min Line
+Y2 Min Line = 
+Maxx(
+    ALLSELECTED(DimDate[MonthNumberOfYear]),
+    ABS([Revenue - PY])
+    )*-3
+
+
+Pos Line
+Pos Line = 0
+
+Neg Line
+Neg Line = 0
+
+
+Above Target Line
+Above Target Line = IF([Revenue - PY]>0,[Revenue - PY])
+
+
+Below Target Line 
+Below Target Line = IF([Revenue - PY]<=0,[Revenue - PY])

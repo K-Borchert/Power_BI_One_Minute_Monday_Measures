@@ -22,6 +22,20 @@ RETURN
 "( "&_sign & FORMAT(_growth,"#0.00 %") &" | "& _sign  & FORMAT(_dif,"€ #,0,.0#K") &" )"
 
 
+Up and Down Color
+Up and Down Color = 
+VAR _Item = [% MoM]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "green",
+    _Item < 0,  "red"
+)
+RETURN
+_Label
+
+
 Subtitle - Reporting Year Rev = 
 VAR MoMRevenue = [MoM]
 VAR MoMLine = 

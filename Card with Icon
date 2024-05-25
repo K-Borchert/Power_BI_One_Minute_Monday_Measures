@@ -1,0 +1,34 @@
+Measures for Card with Icon
+
+Revenue = 
+SUM(Sales[Summe von SalesAmount])
+
+
+MoM = 
+CALCULATE([Revenue], DATEADD('Date'[Date], -1, MONTH))
+
+
+%MoM =
+VAR __PREV_MONTH = CALCULATE([Revenue], DATEADD('Date'[Date], -1, MONTH))
+RETURN
+	DIVIDE([Revenue] - __PREV_MONTH, __PREV_MONTH)
+
+
+Revenue vs MoM = 
+VAR _dif = [Revenue]-[MoM]
+VAR _growth = [% MoM]
+VAR _sign = If(_dif >0,"+"," ")
+RETURN
+"( "&_sign & FORMAT(_growth,"#0.00 %") &" | "& _sign  & FORMAT(_dif,"€ #,0,.0#K") &" )"
+
+
+Subtitle - Reporting Year Rev = 
+VAR MoMRevenue = [MoM]
+VAR MoMLine = 
+IF(MoMRevenue < [Revenue] , 
+"👍 " & Convert(FORMAT([Revenue], "$#,0,.0#K"),STRING),
+"👎 " & Convert(FORMAT([Revenue] , "$#,0,.0#K"),STRING))
+Return
+MoMLine
+
+The last Measure shows the MoM not the Year Revenue!

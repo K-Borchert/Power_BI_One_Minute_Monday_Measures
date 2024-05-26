@@ -1,0 +1,38 @@
+
+Revenue = SUM(Sales[Summe von SalesAmount])
+
+
+MoM = 
+CALCULATE([Revenue], DATEADD('Date'[Date], -1, MONTH))
+
+
+△ MoM = [Revenue]-[MoM]
+
+
+% MoM = 
+VAR __PREV_MONTH = CALCULATE([Revenue], DATEADD('Date'[Date], -1, MONTH))
+RETURN
+	DIVIDE([Revenue] - __PREV_MONTH, __PREV_MONTH)
+
+
+Subtitle - Reporting MoM Rev = 
+VAR MoMRevenue = [MoM]
+VAR MoMLine = 
+IF(MoMRevenue  < [Revenue] , 
+"👍 " & Convert(FORMAT([Revenue], "#,0,.0#K€"),STRING),
+"👎 " & Convert(FORMAT([Revenue] , "#,0,.0#K€"),STRING))
+Return
+MoMLine
+
+
+Up and Down Color = 
+VAR _Item = [% MoM]
+VAR _Label =
+SWITCH(
+    True,
+    _Item = 0,  "grey" ,
+    _Item > 0,  "green",
+    _Item < 0,  "red"
+)
+RETURN
+_Label

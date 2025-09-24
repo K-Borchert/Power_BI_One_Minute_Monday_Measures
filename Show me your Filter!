@@ -1,0 +1,26 @@
+´´´´
+Filter Details = 
+VAR PatientID =
+    IF(
+        ISFILTERED('Hospital ER'[Patient ID]),
+        "PatiendID selected: " & CONCATENATEX(VALUES('Hospital ER'[Patient ID]), 'Hospital ER'[Patient ID], ", "),
+        "All PatientIDs"
+    )
+
+VAR Department =
+    IF(
+        ISFILTERED('Hospital ER'[Department Referral]),
+        "Department selected: " & CONCATENATEX(VALUES('Hospital ER'[Department Referral]), 'Hospital ER'[Department Referral], ", "),
+        "All Departments"
+    )
+
+VAR Age =
+    IF(
+        ISFILTERED('Age Bucket'[Age Bucket]),
+        "Age selected: " & CONCATENATEX(VALUES('Age Bucket'[Age Bucket]), 'Age Bucket'[Age Bucket], ", "),
+        "All Ages"
+    )
+
+RETURN
+    PatientID & UNICHAR(10) & Department & UNICHAR(10) & Age
+````

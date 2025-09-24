@@ -1,4 +1,3 @@
-```
 Filter Details = 
 VAR PatientID =
     IF(
@@ -23,4 +22,4 @@ VAR Age =
 
 RETURN
     PatientID & UNICHAR(10) & Department & UNICHAR(10) & Age
-```
+
